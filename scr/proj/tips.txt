@@ -1,0 +1,100 @@
+#if 0
+void analyze_can_data(uint8_t id_num,uint8_t *data_buf)
+{
+    uint8_t temp_cnt=0;
+    uint8_t find_cnt=0;
+    uint8_t group_find_cnt=0;
+    uint8_t *p_point=NULL;
+    uint32_t temp_message=0;
+    uint64_t temp_can_data=0;//
+    uint64_t raw_value=0;
+    float32_t physical_value;
+    uint8_t temp_signal_cnt=0;
+    uint8_t temp_bit_cnt=0;
+    p_point = data_buf;
+    can_data_send.param_num =0;
+    for(temp_cnt=0;temp_cnt<id_num;temp_cnt++)
+    {
+       Big_End_BytetoDword(p_point,&temp_message);
+       p_point+=4;
+       BinSearch(&DbcDataSave,DbcDataSave.save_message_num,temp_message);
+       for(find_cnt=0;find_cnt<CanMsgGroping.grouping_num;find_cnt++)
+       {
+            if((temp_message>=DbcDataSave.DbcParmSaveArray[CanMsgGroping.MessageAarry[find_cnt].start_num].message_id)&&(temp_message<=DbcDataSave.DbcParmSaveArray[CanMsgGroping.MessageAarry[find_cnt].start_num+CanMsgGroping.MessageAarry[find_cnt].message_num-1].message_id))
+            {
+                #if  0//APP_TRACE_DBG 
+                eat_trace("CanMsgGroping.MessageAarry[find_cnt]-> start_id:%u",DbcDataSave.DbcParmSaveArray[CanMsgGroping.MessageAarry[find_cnt].start_num].message_id);
+                eat_trace("CanMsgGroping.MessageAarry[find_cnt]-> temp_message:%u",temp_message);
+                eat_trace("CanMsgGroping.MessageAarry[find_cnt]-> end_id:%u",DbcDataSave.DbcParmSaveArray[CanMsgGroping.MessageAarry[find_cnt].start_num+CanMsgGroping.MessageAarry[find_cnt].message_num-1].message_id);
+
+                #endif
+                
+                for(group_find_cnt=0;group_find_cnt<CanMsgGroping.MessageAarry[find_cnt].message_num;group_find_cnt++)
+                {
+                    #if  0//APP_TRACE_DBG 
+                    eat_trace("DbcDataSave.DbcParmSaveArray[CanMsgGroping.MessageAarry[find_cnt].start_num+group_find_cnt]->curren message_id:%u",DbcDataSave.DbcParmSaveArray[CanMsgGroping.MessageAarry[find_cnt].start_num+group_find_cnt].message_id);
+                    #endif
+                    if(temp_message ==DbcDataSave.DbcParmSaveArray[CanMsgGroping.MessageAarry[find_cnt].start_num+group_find_cnt].message_id)
+                    {
+                        byete_change_int64(DbcDataSave.DbcParmSaveArray[CanMsgGroping.MessageAarry[find_cnt].start_num+group_find_cnt].signal_array[0].byte_order,p_point,&temp_can_data);
+                        for(temp_signal_cnt=0;temp_signal_cnt<DbcDataSave.DbcParmSaveArray[CanMsgGroping.MessageAarry[find_cnt].start_num+group_find_cnt].signal_num;temp_signal_cnt++)
+                        {
+                            #if  0//APP_TRACE_DBG
+                            eat_trace("analyze_can_data -> signal_id:%u",DbcDataSave.DbcParmSaveArray[CanMsgGroping.MessageAarry[find_cnt].start_num+group_find_cnt].signal_array[temp_signal_cnt].signal_id);
+                            eat_trace("analyze_can_data -> start_bit:%u",DbcDataSave.DbcParmSaveArray[CanMsgGroping.MessageAarry[find_cnt].start_num+group_find_cnt].signal_array[temp_signal_cnt].start_bit);
+                            eat_trace("analyze_can_data -> signal_size:%d",DbcDataSave.DbcParmSaveArray[CanMsgGroping.MessageAarry[find_cnt].start_num+group_find_cnt].signal_array[temp_signal_cnt].signal_size);
+                            eat_trace("analyze_can_data -> byte_order:%u",DbcDataSave.DbcParmSaveArray[CanMsgGroping.MessageAarry[find_cnt].start_num+group_find_cnt].signal_array[temp_signal_cnt].byte_order);
+                            eat_trace("analyze_can_data -> factor:%lf",DbcDataSave.DbcParmSaveArray[CanMsgGroping.MessageAarry[find_cnt].start_num+group_find_cnt].signal_array[temp_signal_cnt].factor);
+                            eat_trace("analyze_can_data -> offset:%lf",DbcDataSave.DbcParmSaveArray[CanMsgGroping.MessageAarry[find_cnt].start_num+group_find_cnt].signal_array[temp_signal_cnt].offset);
+                            #endif
+                            raw_value=0;
+                            physical_value=0;
+                            Big_End_WordtoByte(DbcDataSave.DbcParmSaveArray[CanMsgGroping.MessageAarry[find_cnt].start_num+group_find_cnt].signal_array[temp_signal_cnt].signal_id,can_data_send.param_buff+6*can_data_send.param_num);
+                            for(temp_bit_cnt=0;temp_bit_cnt<DbcDataSave.DbcParmSaveArray[CanMsgGroping.MessageAarry[find_cnt].start_num+group_find_cnt].signal_array[temp_signal_cnt].signal_size;temp_bit_cnt++)
+                            {
+                                raw_value +=((temp_can_data>>(DbcDataSave.DbcParmSaveArray[CanMsgGroping.MessageAarry[find_cnt].start_num+group_find_cnt].signal_array[temp_signal_cnt].start_bit+temp_bit_cnt))&0x0000000000000001)*pow(2,temp_bit_cnt);
+                            }
+                           physical_value =(float32_t)(raw_value*DbcDataSave.DbcParmSaveArray[CanMsgGroping.MessageAarry[find_cnt].start_num+group_find_cnt].signal_array[temp_signal_cnt].factor + DbcDataSave.DbcParmSaveArray[CanMsgGroping.MessageAarry[find_cnt].start_num+group_find_cnt].signal_array[temp_signal_cnt].offset);
+                           #if 0//APP_TRACE_DBG
+                           eat_trace("analyze_can_data ->signal id:%u physical_value:%f",DbcDataSave.DbcParmSaveArray[CanMsgGroping.MessageAarry[find_cnt].start_num+group_find_cnt].signal_array[temp_signal_cnt].signal_id,physical_value);
+                           #endif
+                           Big_End_DwordtoByte(physical_value,can_data_send.param_buff+6*can_data_send.param_num+2);
+                           can_data_send.param_num +=1;
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+       }
+       p_point+=8;
+    }
+}
+if(DbcDataSave.DbcParmSaveArray[post_offest].signal_array[temp_signal_cnt].byte_order==0)
+                     {
+                          #if APP_TRACE_DBG
+                          eat_trace("analyze_can_data ->signal order:%u",DbcDataSave.DbcParmSaveArray[post_offest].signal_array[temp_signal_cnt].byte_order);
+                          #endif
+                          temp_can_data = temp_raw_value;
+                          raw_value =(temp_can_data>>(63-DbcDataSave.DbcParmSaveArray[post_offest].signal_array[temp_signal_cnt].start_bit-DbcDataSave.DbcParmSaveArray[post_offest].signal_array[temp_signal_cnt].signal_size))
+                                      &(0xFFFFFFFFFFFFFFFF>>(64-DbcDataSave.DbcParmSaveArray[post_offest].signal_array[temp_signal_cnt].signal_size));
+                          #if APP_TRACE_DBG
+                          eat_trace("analyze_can_data1 ->signal id:%u",DbcDataSave.DbcParmSaveArray[post_offest].signal_array[temp_signal_cnt].signal_id);
+                          #endif
+                     }
+                     else
+                     {
+                         #if APP_TRACE_DBG
+                         eat_trace("analyze_can_data ->signal order:%u",DbcDataSave.DbcParmSaveArray[post_offest].signal_array[temp_signal_cnt].byte_order);
+                         #endif
+                         temp_can_data = temp_raw_value;
+                         raw_value =(temp_can_data<<(DbcDataSave.DbcParmSaveArray[post_offest].signal_array[temp_signal_cnt].start_bit))
+                                     &(0xFFFFFFFFFFFFFFFF<<(64-DbcDataSave.DbcParmSaveArray[post_offest].signal_array[temp_signal_cnt].signal_size));
+                        #if 0//APP_TRACE_DBG
+                        eat_trace("analyze_can_data2 ->signal id:%u",DbcDataSave.DbcParmSaveArray[post_offest].signal_array[temp_signal_cnt].signal_id);
+                        #endif
+                        int64_change_byete(EAT_TRUE,raw_value,temp_uint8_buffer);
+                        byete_change_int64(EAT_TRUE,temp_uint8_buffer,&raw_value);
+                     }
+
+#endif

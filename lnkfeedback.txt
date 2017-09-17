@@ -1,0 +1,121 @@
+;#<FEEDBACK># ARM Linker, RVCT3.1 [Build 569]: Last Updated: Mon Sep 11 20:39:05 2017
+;VERSION 0.2
+;FILE Eat_App_Protocol_Setting.o
+;FILE Fade_Area_Location.o
+;FILE Inflection_pass_up.o
+;FILE TTS_sound_pro.o
+;FILE analyze_dbc_data.o
+dbc_file_read_init <= USED 0
+;FILE analyze_send_can_data.o
+;FILE arithmetic_md5.o
+;FILE at_cmd.o
+antena_indef_alarm_tone <= USED 0
+;FILE base_process_handle.o
+system_sleep_juged <= USED 0
+;FILE board_inquire.o
+;FILE board_sim800_one_second_commucate.o
+;FILE call_ring_pro.o
+;FILE can_receive_data_proc.o
+;FILE demarcate_data.o
+;FILE detailed_gnss_date.o
+gnss_updata_handle <= USED 0
+;FILE diskio.o
+;FILE driver_ic_card_update.o
+TCP_DianZi_YunDan_Update <= USED 0
+;FILE driving_records_trans_out.o
+gb19056_inquier_data_envelope <= USED 0
+hy_package_driver_record_update <= USED 0
+inquire_dring_record_queue_porc <= USED 0
+is_inquire_dring_record_queue_full <= USED 0
+;FILE ff.o
+f_chmod <= USED 0
+f_closedir <= USED 0
+f_getfree <= USED 0
+f_mkdir <= USED 0
+f_mkfs <= USED 0
+f_mount <= USED 0
+f_opendir <= USED 0
+f_readdir <= USED 0
+f_rename <= USED 0
+f_stat <= USED 0
+f_truncate <= USED 0
+f_unlink <= USED 0
+f_utime <= USED 0
+;FILE file_system_envelope.o
+;FILE gprs_link.o
+;FILE ip_lock_proc.o
+;FILE list_test.o
+delet_node <= USED 0
+;FILE location_data_send_handle.o
+Exit_Location_Queue <= USED 0
+;FILE location_report_proc.o
+;FILE lock_car_strategy.o
+;FILE main.o
+$Sub$$__user_initial_stackheap <= USED 0
+;FILE media_update_proc.o
+;FILE memu_setting_proc.o
+;FILE pbulic_tool.o
+BCD_TO_String <= USED 0
+Time_Minte_Add <= USED 0
+Time_Second_Add <= USED 0
+int2arr <= USED 0
+int64_change_byete <= USED 0
+short2arr <= USED 0
+;FILE polygon_area_proc.o
+;FILE power_adc_pro.o
+get_adc_period <= USED 0
+;FILE receive_data_proc_list.o
+;FILE rectangle_area_pro.o
+;FILE regional_judgment.o
+GetDistance <= USED 0
+radian <= USED 0
+;FILE round_area_pro.o
+;FILE route_range_proc.o
+;FILE send_data_protocol.o
+;FILE send_heart_beat.o
+;FILE sim_bsp_uart.o
+;FILE sleep_proc.o
+;FILE sms_receive_send_envelope.o
+gsmDecodeUcs2 <= USED 0
+gsmEncode7bit <= USED 0
+gsmEncodeUcs2 <= USED 0
+;FILE sms_setting_proc.o
+;FILE spi_flash_driver.o
+clr_sflash_REST <= USED 0
+clr_sflash_WP <= USED 0
+set_sflash_REST <= USED 0
+set_sflash_WP <= USED 0
+sflash_Erase_Chip <= USED 0
+sflash_FastRead_Byte <= USED 0
+sflash_Powerdown <= USED 0
+sflash_Read_Byte <= USED 0
+sflash_Read_DeviceID <= USED 0
+sflash_Read_ID3 <= USED 0
+sflash_Read_ManufactDeviceID <= USED 0
+sflash_ReleasePowerDown <= USED 0
+sflash_Verify <= USED 0
+sflash_file_init <= USED 0
+sflash_read_nBytes <= USED 0
+sflash_write_Disable <= USED 0
+sflash_write_StatusReg <= USED 0
+spi_flash_format <= USED 0
+spi_flash_test_read1 <= USED 0
+spi_flash_test_read2 <= USED 0
+;FILE subcontract_servn_num.o
+;FILE system_list.o
+list_add <= USED 0
+list_add_tail <= USED 0
+;FILE system_param_proc.o
+;FILE take_pictures.o
+;FILE terminal_register.o
+vison_infor_update <= USED 0
+;FILE thread_comun_msg.o
+;FILE thread_recive_808data_proc.o
+;FILE time_def.o
+sec2date <= USED 0
+;FILE time_process.o
+;FILE uart1_data_proc.o
+;FILE update_system.o
+;FILE usb_debug_proc.o
+;FILE voice_record_proc.o
+voice_record_delet <= USED 0

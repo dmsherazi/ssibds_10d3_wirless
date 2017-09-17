@@ -1,0 +1,22 @@
+"E:\All_code_space_file\work_space\1d03_ip_lock\1d03_common_orgin/scr/proj/rectangle_area_pro.h", line 42: Warning:  #1-D: last line of file ends without a newline
+      
+      ^
+"E:\All_code_space_file\work_space\1d03_ip_lock\1d03_common_orgin/scr/proj/route_range_proc.h", line 55: Warning:  #1-D: last line of file ends without a newline
+  #endif
+        ^
+"main.c", line 55: Warning:  #1296-D: extended constant initialiser used
+   APP_ENTRY_FLAG 
+   ^
+"main.c", line 55: Warning:  #1296-D: extended constant initialiser used
+   APP_ENTRY_FLAG 
+   ^
+"main.c", line 28: Warning:  #177-D: variable "wr_uart_offset" was declared but never referenced
+  static u16 wr_uart_offset = 0; //用来标记uart未写完的数据
+             ^
+"main.c", line 29: Warning:  #177-D: variable "wr_uart_len" was declared but never referenced
+  static u16 wr_uart_len = 0; //下次需要往串口写的数据长度
+             ^
+"E:\All_code_space_file\work_space\1d03_ip_lock\1d03_common_orgin/core/inc/eat_clib_define.h", line 32: Warning: C3017W: <arg.4> may be used before being set
+    struct __argc_argv arg;
+                       ^
+main.c: 7 warnings, 0 errors
